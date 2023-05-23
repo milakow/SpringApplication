@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.lang.NonNull;
 
@@ -25,15 +26,34 @@ public class Product {
     @Column
     private BigDecimal price;
 
+    @Column
+    private String color;
+    @Column
+    private Integer shelfNumber;
+
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "supermarket_id", columnDefinition = "integer")
+    private Supermarket supermarket;
+
     public Product(){
 
     }
-//    public Product(long id, String name, int amount, double price) {
-//        this.id = id;
-//        this.name = name;
-//        this.amount = amount;
-//        this.price = price;
-//    }
+    public Product(int id, String name, int amount, BigDecimal price) {
+        this.id = id;
+        this.name = name;
+        this.amount = amount;
+        this.price = price;
+    }
+
+    public Product(int id, String name, int amount, BigDecimal price, String color, int shelfNumber) {
+        this.id = id;
+        this.name = name;
+        this.amount = amount;
+        this.price = price;
+        this.color = color;
+        this.shelfNumber = shelfNumber;
+    }
 
     public int getId() {
         return id;
@@ -65,5 +85,29 @@ public class Product {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public Integer getShelfNumber() {
+        return shelfNumber;
+    }
+
+    public void setShelfNumber(Integer shelfNumber) {
+        this.shelfNumber = shelfNumber;
+    }
+
+    public Supermarket getSupermarket() {
+        return supermarket;
+    }
+
+    public void setSupermarket(Supermarket supermarket) {
+        this.supermarket = supermarket;
     }
 }
