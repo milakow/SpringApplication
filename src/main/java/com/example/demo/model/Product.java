@@ -3,32 +3,29 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.springframework.lang.NonNull;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 import java.math.BigDecimal;
 
 
 @Entity
-@Table(name= "product")
+@Table(name = "product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "serial")
     private int id;
-
-    @Column
+    @NotBlank(message = "Name of product cannot be blank!")
     private String name;
-
-    @Column
+    @Min(value = 1, message = "Min value of amount must be greater or equal than 1!")
     private int amount;
 
-    @Column
+    //    private static final BigDecimal testNum = valueOf(1.0);
+    @Min(value = 1, message = "Price cannot be blank!")
     private BigDecimal price;
-
-    @Column
     private String color;
-    @Column
     private Integer shelfNumber;
 
     @JsonIgnore
@@ -36,9 +33,10 @@ public class Product {
     @JoinColumn(name = "supermarket_id", columnDefinition = "integer")
     private Supermarket supermarket;
 
-    public Product(){
+    public Product() {
 
     }
+
     public Product(int id, String name, int amount, BigDecimal price) {
         this.id = id;
         this.name = name;

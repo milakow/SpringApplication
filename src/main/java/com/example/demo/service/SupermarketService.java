@@ -2,11 +2,15 @@ package com.example.demo.service;
 
 import com.example.demo.model.Product;
 import com.example.demo.model.Supermarket;
+import com.example.demo.model.Supplier;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.repository.SupermarketRepository;
+import com.example.demo.repository.SupplierRepository;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +22,8 @@ public class SupermarketService {
     ProductRepository productRepository;
     @Autowired
     ProductService productService;
-
+//    @Autowired
+//    SupplierRepository supplierRepository;
     public void addProductToSupermarket(int productId, int supermarketId) {
         Supermarket supermarket = getSupermarketById(supermarketId).get();
         Product product = productService.getProductById(productId).get();
@@ -27,6 +32,7 @@ public class SupermarketService {
         productRepository.save(product);
 //        }
     }
+
 
     public List<Supermarket> listAllSupermarkets() {
         return supermarketRepository.findAll();

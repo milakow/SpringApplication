@@ -42,8 +42,6 @@ public class ProductService {
     }
 
 
-
-
     public void addProduct(Product product) {
 //        if (productRepository.existsById(product.getId()))  {
 //            System.out.println("Product already exists");
