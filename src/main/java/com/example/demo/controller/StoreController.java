@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
+import com.example.demo.service.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,9 @@ import java.util.Optional;
 public class StoreController {
 
     @Autowired
+//    ProductServiceImpl productService;
     ProductService productService;
+
 
     @GetMapping("/all")
     public List<Product> listAllProducts() {
@@ -60,9 +63,20 @@ public class StoreController {
         productService.addProduct(product);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("")
+    public void massAdding(@RequestBody List<Product> products) {
+        productService.massAdding(products);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteProductById(@PathVariable int id) {
         productService.deleteProductById(id);
+    }
+
+    @DeleteMapping("")
+    public void massDeletion(@RequestBody List<Integer> ids) {
+        productService.massDeletion(ids);
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)

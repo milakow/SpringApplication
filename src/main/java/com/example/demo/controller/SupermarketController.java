@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.model.Product;
 import com.example.demo.model.Supermarket;
 import com.example.demo.service.SupermarketService;
 import jakarta.validation.ConstraintViolationException;
@@ -21,6 +22,12 @@ public class SupermarketController {
     @PatchMapping("/{productId}/addProduct/{supermarketId}")
     public void addProductToSupermarket(@PathVariable int productId, @PathVariable int supermarketId){
         supermarketService.addProductToSupermarket(productId, supermarketId);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PatchMapping("/{supermarketId}")
+    public void addMultipleProductsToSupermarket(@RequestBody List<Product> products, @PathVariable int supermarketId) {
+        supermarketService.addMultipleProductsToSupermarket(products, supermarketId);
     }
 
     @GetMapping("/all")
@@ -44,6 +51,8 @@ public class SupermarketController {
     public void addSupermarket(@RequestBody Supermarket supermarket) {
         supermarketService.addSupermarket(supermarket);
     }
+
+
 
     @DeleteMapping("/{id}")
     public void deleteSupermarket(@PathVariable int id) {

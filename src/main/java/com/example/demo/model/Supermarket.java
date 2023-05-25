@@ -18,7 +18,6 @@ public class Supermarket {
     private int id;
     @Size(min = 3, message = "Size of the name must be greater than 2")
     private String name;
-
     @OneToMany(mappedBy = "supermarket")
     List<Product> productList;
 
@@ -27,7 +26,9 @@ public class Supermarket {
     private Manager manager;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "supermarketList")
+//    @ManyToMany(mappedBy = "supermarketList")
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "supplier_supermarket_mapping", joinColumns = @JoinColumn(name = "supplier_id"), inverseJoinColumns = @JoinColumn(name = "supermarket_id"))
     List<Supplier> supplierList;
 
 

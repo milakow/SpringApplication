@@ -29,7 +29,7 @@ public class Product {
     private Integer shelfNumber;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "supermarket_id", columnDefinition = "integer")
     private Supermarket supermarket;
 

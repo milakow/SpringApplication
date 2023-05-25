@@ -2,15 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.model.Product;
 import com.example.demo.model.Supermarket;
-import com.example.demo.model.Supplier;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.repository.SupermarketRepository;
-import com.example.demo.repository.SupplierRepository;
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,15 +18,26 @@ public class SupermarketService {
     ProductRepository productRepository;
     @Autowired
     ProductService productService;
-//    @Autowired
-//    SupplierRepository supplierRepository;
+    
     public void addProductToSupermarket(int productId, int supermarketId) {
         Supermarket supermarket = getSupermarketById(supermarketId).get();
         Product product = productService.getProductById(productId).get();
         Supermarket newSupermarket = supermarket;
         product.setSupermarket(supermarket);
         productRepository.save(product);
-//        }
+    }
+
+    public void addMultipleProductsToSupermarket(List<Product> products, int supermarketId) {
+        Supermarket supermarket = getSupermarketById(supermarketId).get();
+        for (Product product : products) {
+            if (!supermarket.getProductList().contains(product)) {
+                product.setSupermarket(supermarket);
+                productRepository.save(product);
+
+            } else {
+                System.out.println("The product " + product.getId() + " already exists!");
+            }
+        }
     }
 
 
