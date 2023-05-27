@@ -25,9 +25,6 @@ public class CustomSecurityConfig {
         http.authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/hello").permitAll()
                         .requestMatchers(HttpMethod.GET).authenticated()
-//                        .requestMatchers(HttpMethod.POST).authenticated()
-//                        .requestMatchers(HttpMethod.PUT).authenticated()
-//                        .requestMatchers(HttpMethod.PATCH).authenticated()
                         .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST).hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.PUT).hasAnyRole("ADMIN","USER")
@@ -35,6 +32,7 @@ public class CustomSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
+                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }

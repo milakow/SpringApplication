@@ -34,6 +34,8 @@ public class ManagerService {
     public void addManager(Manager manager) {
         if (!managerRepository.existsById(manager.getId())) {
             managerRepository.save(manager);
+        } else{
+            throw new IllegalArgumentException("Manager with this id exists");
         }
     }
 

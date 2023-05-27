@@ -59,6 +59,11 @@ public class SupermarketController {
         supermarketService.deleteSupermarket(id);
     }
 
+    @DeleteMapping("/relatedtomanager/{id}")
+    public void deleteSupermarketRelatedToManager(@PathVariable int id) {
+        supermarketService.deleteSupermarketRelatedToManager(id);
+    }
+
 
 //    @ResponseStatus(HttpStatus.CONFLICT)
 //    @ExceptionHandler(ConstraintViolationException.class)

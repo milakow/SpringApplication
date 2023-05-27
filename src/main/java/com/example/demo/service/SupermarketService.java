@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Manager;
 import com.example.demo.model.Product;
 import com.example.demo.model.Supermarket;
+import com.example.demo.repository.ManagerRepository;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.repository.SupermarketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class SupermarketService {
     ProductRepository productRepository;
     @Autowired
     ProductService productService;
+
+    @Autowired
+    ManagerRepository managerRepository;
     
     public void addProductToSupermarket(int productId, int supermarketId) {
         Supermarket supermarket = getSupermarketById(supermarketId).get();
@@ -55,7 +60,17 @@ public class SupermarketService {
         }
     }
 
-    public void deleteSupermarket(int id) {
+    public void deleteSupermarket(int id){
+        supermarketRepository.deleteById(id);
+
+    }
+
+    //clear supermarket_id for Manager in database- it’s a parent
+    public void deleteSupermarketRelatedToManager(int id) {
+        Supermarket supermarket = supermarketRepository.findById(id).get();
+        Manager manager = supermarket.getManager();
+        manager.setSupermarket(null);
+        managerRepository.save(manager);
         supermarketRepository.deleteById(id);
     }
 }
